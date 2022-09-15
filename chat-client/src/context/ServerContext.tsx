@@ -10,7 +10,7 @@ export interface ServerState {
   setConn: (conn: WebSocket) => void;
 }
 
-const ServerContext = createContext<ServerState>({} as ServerState);
+export const ServerContext = createContext<ServerState>({} as ServerState);
 
 export const ServerProvider = (props: any) => {
   const { children } = props;
@@ -19,7 +19,7 @@ export const ServerProvider = (props: any) => {
   const [conn, setConn] = useState<WebSocket>({} as WebSocket);
 
   useEffect(() => {
-    if (connected == false) {
+    if (connected === false) {
       setConn(new WebSocket("ws://localhost:8080/ws"));
     }
     setConnected(true);
