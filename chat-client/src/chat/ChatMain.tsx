@@ -1,6 +1,8 @@
 import { useState } from "react";
 import useCredentials from "../hooks/useCredentials";
+import useGlobal from "../hooks/useGlobal";
 import MessageComponent from "./MessageComponent";
+import { SendWsMessage } from "../ws_controller/WebSocketController";
 import "./Chat.css";
 
 export interface Message {
@@ -11,9 +13,9 @@ export interface Message {
 }
 
 const ChatMain = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState<string>("");
   const credentials = useCredentials();
+  const global = useGlobal();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,14 +27,14 @@ const ChatMain = () => {
       color: credentials?.color,
     };
 
-    setMessages([...messages, new_message]);
+    SendWsMessage("write-message", new_message, global);
     setInputMessage("");
   };
 
   return (
     <main className="chat">
       <section className="chat-view">
-        {messages
+        {global.messages
           .slice(0)
           .reverse()
           .map((message, index) => (

@@ -16,7 +16,7 @@ body, html {
   height: 100%;
   display: flex;
   flex-direction: row;
-  background: black;
+  background: rgb(20,20,20);
   color:rgb(229, 229, 229);
 }
 

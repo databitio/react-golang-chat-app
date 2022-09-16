@@ -5,16 +5,14 @@ import useCredentials from "../hooks/useCredentials";
 
 const NavbarMain = () => {
   const global = useGlobal();
-  const credentials = useCredentials();
+  const userListLen = global?.users?.length ? global?.users?.length : 1;
+
   return (
     <section className="navbar">
-      <h1 className="navbar-title">
-        Users online: {`(${global?.users?.length})`}
-      </h1>
-      <UserTag username={credentials?.username} />
+      <h1 className="navbar-title">Users online: {`(${userListLen})`}</h1>
       {global?.users?.map((user, index) => (
         <div key={index}>
-          <UserTag username={user?.username} />
+          <UserTag username={user} />
         </div>
       ))}
     </section>
